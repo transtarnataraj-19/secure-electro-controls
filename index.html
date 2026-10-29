@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Secure Electro Controls - Online Shop</title>
+  <style>
+    * { box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    body { margin: 0; background-color: #f4f6f9; color: #333; padding-bottom: 90px; }
+    
+    header { background: #0d47a1; color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; position: sticky; top: 0; z-index: 99; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    header .brand-title h1 { margin: 0; font-size: 18px; }
+    header .brand-title p { margin: 2px 0 0; font-size: 11px; opacity: 0.9; }
+    
+    .cart-icon-btn { background: #ff9800; color: #fff; border: none; padding: 8px 14px; border-radius: 20px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+    .cart-badge-count { background: #d32f2f; color: white; border-radius: 50%; padding: 2px 6px; font-size: 12px; }
+
+    .container { max-width: 1100px; margin: 15px auto; padding: 0 10px; }
+    .controls { display: flex; gap: 8px; margin-bottom: 15px; flex-wrap: wrap; }
+    .search-box { flex: 1; min-width: 180px; padding: 10px 12px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; }
+    .category-select { padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 6px; background: white; }
+    
+    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 25px; }
+    @media (min-width: 768px) {
+      .product-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
+    }
+    
+    .card { background: white; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.08); padding: 10px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid #eee; }
+    .img-container { width: 100%; height: 120px; display: flex; align-items: center; justify-content: center; background: #fafafa; border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
+    .img-container img { max-width: 100%; max-height: 100%; object-fit: contain; }
+    @media (min-width: 768px) {
+      .img-container { height: 150px; }
+      .card { padding: 15px; }
+    }
+    
+    .card h3 { font-size: 13px; margin: 4px 0; color: #1a237e; min-height: 35px; line-height: 1.2; }
+    .card .category-tag { font-size: 10px; color: #666; background: #e8eaf6; padding: 2px 6px; border-radius: 4px; width: fit-content; margin-bottom: 6px; }
+    .card p.price { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 3px 0 8px; }
+    
+    .btn { background: #1976d2; color: white; border: none; padding: 8px 10px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 13px; font-weight: 600; margin-top: 4px; }
+    .btn-whatsapp { background: #25D366; color: white; border: none; padding: 14px; border-radius: 6px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+
+    #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: #2e7d32; color: white; padding: 10px 20px; border-radius: 25px; font-size: 14px; transition: transform 0.3s ease, opacity 0.3s ease; opacity: 0; z-index: 1000; font-weight: 600; }
+    #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+    
+    .cart-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: flex-end; z-index: 1000; }
+    .cart-modal-overlay.open { display: flex; }
+    .cart-modal-content { background: white; width: 100%; max-width: 420px; height: 100%; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.2); }
+    .cart-modal-header { background: #0d47a1; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .close-modal-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
+    .cart-modal-body { padding: 15px 20px; flex: 1; overflow-y: auto; }
+    .cart-modal-footer { padding: 15px 20px; background: #f9f9f9; border-top: 1px solid #ddd; }
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+    .qty-controls { display: flex; align-items: center; gap: 6px; }
+    .qty-btn { background: #e0e0e0; border: none; width: 26px; height: 26px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    
+    footer { text-align: center; padding: 15px; font-size: 12px; color: #666; background: #fff; border-top: 1px solid #eee; margin-top: 30px; }
+  </style>
+</head>
+<body>
+
+  <div id="toast">✅ Added to cart successfully!</div>
+
+  <header>
+    <div class="brand-title">
+      <h1>Secure Electro Controls</h1>
+      <p>Smart Electricals & Industrial Automation | Sirsi (581340)</p>
+    </div>
+    <button class="cart-icon-btn" onclick="toggleCartModal()">
+      🛒 Cart <span class="cart-badge-count" id="headerCartCount">0</span>
+    </button>
+  </header>
+
+  <div class="cart-modal-overlay" id="cartModal" onclick="handleOverlayClick(event)">
+    <div class="cart-modal-content">
+      <div class="cart-modal-header">
+        <h2>🛒 Your Selected Order List</h2>
+        <button class="close-modal-btn" onclick="toggleCartModal()">&times;</button>
+      </div>
+      <div class="cart-modal-body" id="cartModalItems">
+        <p style="color:#777; text-align:center; margin-top:30px;">No items selected yet.</p>
+      </div>
+      <div class="cart-modal-footer" id="cartModalFooter" style="display:none;">
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; margin-bottom:12px;">
+          <span>Total Estimated Price:</span>
+          <span id="cartModalTotal" style="color:#2e7d32;">₹0</span>
+        </div>
+        <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">Send Order via WhatsApp 💬</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h2 style="font-size: 18px; color: #0d47a1; margin-bottom: 10px;">Electrical Products Catalog</h2>
+    
+    <div class="controls">
+      <input type="text" id="searchInput" class="search-box" placeholder="Search items by name..." onkeyup="filterProducts()">
+      <select id="categoryFilter" class="category-select" onchange="filterProducts()">
+        <option value="ALL">All Categories</option>
+        <option value="Switches & Sockets">Switches & Sockets</option>
+        <option value="Holders & Lighting">Holders & Lighting</option>
+        <option value="Wires & Cables">Wires & Cables</option>
+        <option value="PVC Pipes & Fittings">PVC Pipes & Fittings</option>
+        <option value="Casing Patti & Fittings">Casing Patti & Fittings</option>
+        <option value="PVC Plates & Boxes">PVC Plates & Boxes</option>
+        <option value="Concealed Boxes">Concealed Boxes</option>
+        <option value="MCB & RCCB">MCB & RCCB</option>
+        <option value="DB Boxes">DB Boxes</option>
+        <option value="Industrial Automation">Industrial Automation</option>
+      </select>
+    </div>
+    
+    <div class="product-grid" id="productGrid"></div>
+  </div>
+
+  <footer>
+    <p>© Secure Electro Controls - Call: 7892369689</p>
+  </footer>
+
+  <script>
+    const defaultPlaceholder = "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%230d47a1' stroke-width='1.5'><rect x='2' y='6' width='20' height='12' rx='2'/><circle cx='8' cy='12' r='2'/><circle cx='16' cy='12' r='2'/></svg>";
+    let products = [];
+    let cart = {};
+
+    window.addEventListener('DOMContentLoaded', () => {
+      fetch('products.json')
+        .then(response => response.json())
+        .then(data => {
+          products = data;
+          renderProducts();
+        })
+        .catch(err => {
+          console.error('Error loading products.json:', err);
+          document.getElementById('productGrid').innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:red;">Failed to load products.json file.</p>';
+        });
+      updateCartBadge();
+    });
+
+    function renderProducts() {
+      const searchVal = document.getElementById('searchInput').value.toLowerCase();
+      const catVal = document.getElementById('categoryFilter').value;
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+
+      const filtered = products.filter(p => {
+        const matchesSearch = p.name.toLowerCase().includes(searchVal);
+        const matchesCat = (catVal === 'ALL' || p.category === catVal);
+        return matchesSearch && matchesCat;
+      });
+
+      if(filtered.length === 0) {
+        grid.innerHTML = '<p style="grid-column: 1/-1; text-align:center; color:#777; padding:20px;">No matching items found.</p>';
+        return;
+      }
+
+      filtered.forEach((prod) => {
+        let imgSrc = (prod.img && prod.img.trim() !== "") ? prod.img : defaultPlaceholder;
+        grid.innerHTML += `
+          <div class="card">
+            <span class="category-tag">${prod.category || 'General'}</span>
+            <div class="img-container">
+              <img src="${imgSrc}" alt="${prod.name}" onerror="this.src='${defaultPlaceholder}'">
+            </div>
+            <h3>${prod.name}</h3>
+            <p class="price">₹${prod.price}</p>
+            <button class="btn" onclick="addToCart(${prod.id})">+ Add to Order</button>
+          </div>
+        `;
+      });
+    }
+
+    function filterProducts() {
+      renderProducts();
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.innerText = message;
+      toast.classList.add('show');
+      setTimeout(() => { toast.classList.remove('show'); }, 1500);
+    }
+
+    function addToCart(id) {
+      const item = products.find(p => p.id === id);
+      if (!item) return;
+
+      if (cart[id]) {
+        cart[id].qty += 1;
+      } else {
+        cart[id] = { id: item.id, name: item.name, price: item.price, qty: 1 };
+      }
+      updateCartBadge();
+      if(document.getElementById('cartModal').classList.contains('open')) {
+        renderCartModalContent();
+      }
+      showToast(`Added to cart: ${item.name}`);
+    }
+
+    function updateQty(id, change) {
+      if (cart[id]) {
+        cart[id].qty += change;
+        if (cart[id].qty <= 0) { delete cart[id]; }
+      }
+      updateCartBadge();
+      renderCartModalContent();
+    }
+
+    function updateCartBadge() {
+      let totalUnits = 0;
+      Object.keys(cart).forEach(k => totalUnits += cart[k].qty);
+      document.getElementById('headerCartCount').innerText = totalUnits;
+    }
+
+    function toggleCartModal() {
+      const modal = document.getElementById('cartModal');
+      modal.classList.toggle('open');
+      if (modal.classList.contains('open')) {
+        renderCartModalContent();
+      }
+    }
+
+    function handleOverlayClick(event) {
+      if (event.target.id === 'cartModal') {
+        toggleCartModal();
+      }
+    }
+
+    function renderCartModalContent() {
+      const cartModalItems = document.getElementById('cartModalItems');
+      const cartModalFooter = document.getElementById('cartModalFooter');
+      const cartKeys = Object.keys(cart);
+
+      if (cartKeys.length === 0) {
+        cartModalItems.innerHTML = '<p style="color:#777; text-align:center; margin-top:40px;">No items selected yet.</p>';
+        cartModalFooter.style.display = 'none';
+        return;
+      }
+
+      let html = '';
+      let grandTotal = 0;
+
+      cartKeys.forEach((key) => {
+        const item = cart[key];
+        const itemTotal = item.price * item.qty;
+        grandTotal += itemTotal;
+
+        html += `
+          <div class="cart-item">
+            <div>
+              <div style="font-weight:600; color:#1a237e;">${item.name}</div>
+              <div style="font-size:12px; color:#666;">₹${item.price} × ${item.qty}</div>
+            </div>
+            <div class="qty-controls">
+              <button class="qty-btn" onclick="updateQty(${item.id}, -1)">-</button>
+              <span style="font-weight:bold; padding:0 6px;">${item.qty}</span>
+              <button class="qty-btn" onclick="updateQty(${item.id}, 1)">+</button>
+            </div>
+            <div style="font-weight:bold; color:#2e7d32;">₹${itemTotal}</div>
+          </div>
+        `;
+      });
+
+      cartModalItems.innerHTML = html;
+      document.getElementById('cartModalTotal').innerText = '₹' + grandTotal;
+      cartModalFooter.style.display = 'block';
+    }
+
+    function sendWhatsAppOrder() {
+      const cartKeys = Object.keys(cart);
+      if (cartKeys.length === 0) return;
+      let message = "Hello Secure Electro Controls, I want to order:\n\n";
+      let grandTotal = 0;
+      let count = 1;
+
+      cartKeys.forEach((key) => {
+        const item = cart[key];
+        const itemTotal = item.price * item.qty;
+        grandTotal += itemTotal;
+        message += `${count}. ${item.name} - ₹${item.price} x ${item.qty} = ₹${itemTotal}\n`;
+        count++;
+      });
+
+      message += `\nTotal Estimated Price: ₹${grandTotal}\n\nPlease confirm availability & delivery details.`;
+
+      const phone = "917892369689"; 
+      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      window.open(url, '_blank');
+    }
+  </script>
+</body>
+</html>
