@@ -145,10 +145,10 @@
        { "id": 145, "name": "CCTV IP 4MP BULLET CAMARA  ", "price": 4500.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-bullet-camara.webp" },
        { "id": 146, "name": "NVR 8 CHANNEL ", "price": 6000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-8ch-nvr.webp" },
        { "id": 147, "name": "CAT6 CABLE 100mtr ", "price": 4000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-cat6-cable.jpg" },
-              { "id": 148, "name": "RJ 45 CONNECTORS ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-rj45-connectors.jpg" },
-                     { "id": 149, "name": "RJ11 CONNETORS ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-rj11-connectors.png" },
-                            { "id": 150, "name": "CCTV JUNCTION BOX ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/CCTV-JUNCTION-BOX.jpg" },
+              { "id": 148, "name": "RJ 45 CONNECTORS ", "price": 40.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-rj45-connectors.jpg" },
+                     { "id": 149, "name": "RJ11 CONNETORS ", "price": 20.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-rj11-connectors.png" },
+                            { "id": 150, "name": "CCTV JUNCTION BOX ", "price": 100.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/CCTV-JUNCTION-BOX.jpg" },
                                    { "id": 151, "name": "HOME SMART SWITCHES ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/Home-automation.jpg" },
-                                          { "id": 152, "name": "Water Pump 1HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "images/vguard-pump-1hp.webp" },
-                                                 { "id": 153, "name": "Water Pump 1.5HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "images/vguard-pump-1.5hp.webp" }
+                                          { "id": 152, "name": "Water Pump 1HP 230v ", "price": 13500.0, "category": "Industrial Automation", "img": "images/vguard-pump-1hp.webp" },
+                                                 { "id": 153, "name": "Water Pump 1.5HP 230v ", "price": 15500.0, "category": "Industrial Automation", "img": "images/vguard-pump-1.5hp.webp" }
 ]
