@@ -110,7 +110,7 @@
   { "id": 109, "name": "1.5\" CASING - L", "price": 15.0, "category": "Casing Patti & Fittings", "img": "" },
   { "id": 110, "name": "1.5\" CASING - T", "price": 15.0, "category": "Casing Patti & Fittings", "img": "" },
   { "id": 111, "name": "SQUARE BOX", "price": 12.0, "category": "Casing Patti & Fittings", "img": "images/SQUARE-BOX.webp" },
-  { "id": 112, "name": "0.5 \" CASING PATTI", "price": 45.0, "category": "Casing Patti & Fittings", "img": "" },
+  { "id": 112, "name": "0.5 \" CASING PATTI", "price": 45.0, "category": "Casing Patti & Fittings", "img": "images/0.5ich-casing-patti.webp" },
   { "id": 113, "name": "1\" CASING PATTI JOINTER", "price": 5.0, "category": "Casing Patti & Fittings", "img": "" },
   { "id": 114, "name": "0.5 INCH SCREW", "price": 1.0, "category": "Hardware", "img": "" },
   { "id": 115, "name": "1 INCH SCREW", "price": 2.0, "category": "Hardware", "img": "" },
