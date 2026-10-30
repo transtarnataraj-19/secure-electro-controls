@@ -38,21 +38,24 @@
     .card p.price { font-size: 16px; font-weight: bold; color: #2e7d32; margin: 3px 0 8px; }
     
     .btn { background: #1976d2; color: white; border: none; padding: 8px 10px; border-radius: 4px; cursor: pointer; width: 100%; font-size: 13px; font-weight: 600; margin-top: 4px; }
-    .btn-whatsapp { background: #25D366; color: white; border: none; padding: 14px; border-radius: 6px; width: 100%; font-size: 16px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn-whatsapp { background: #25D366; color: white; border: none; padding: 12px; border-radius: 6px; width: 100%; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
     #toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%) translateY(80px); background: #2e7d32; color: white; padding: 10px 20px; border-radius: 25px; font-size: 14px; transition: transform 0.3s ease, opacity 0.3s ease; opacity: 0; z-index: 1000; font-weight: 600; }
     #toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
     
     .cart-modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; justify-content: flex-end; z-index: 1000; }
     .cart-modal-overlay.open { display: flex; }
+    
     .cart-modal-content { background: white; width: 100%; max-width: 420px; height: 100%; display: flex; flex-direction: column; box-shadow: -4px 0 15px rgba(0,0,0,0.2); }
-    .cart-modal-header { background: #0d47a1; color: white; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; }
+    .cart-modal-header { background: #0d47a1; color: white; padding: 12px 15px; display: flex; justify-content: space-between; align-items: center; flex-shrink: 0; }
     .close-modal-btn { background: none; border: none; color: white; font-size: 24px; cursor: pointer; }
-    .cart-modal-body { padding: 15px 20px; flex: 1; overflow-y: auto; }
-    .cart-modal-footer { padding: 15px 20px; background: #f9f9f9; border-top: 1px solid #ddd; }
-    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #eee; font-size: 14px; }
+    
+    .cart-modal-body { padding: 12px 15px; flex: 1; overflow-y: auto; }
+    .cart-modal-footer { padding: 12px 15px; background: #f9f9f9; border-top: 1px solid #ddd; flex-shrink: 0; max-height: 50vh; overflow-y: auto; }
+    
+    .cart-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid #eee; font-size: 13px; }
     .qty-controls { display: flex; align-items: center; gap: 6px; }
-    .qty-btn { background: #e0e0e0; border: none; width: 26px; height: 26px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+    .qty-btn { background: #e0e0e0; border: none; width: 24px; height: 24px; border-radius: 4px; font-weight: bold; cursor: pointer; }
     
     footer { text-align: center; padding: 15px; font-size: 12px; color: #666; background: #fff; border-top: 1px solid #eee; margin-top: 30px; }
   </style>
@@ -74,22 +77,22 @@
   <div class="cart-modal-overlay" id="cartModal" onclick="handleOverlayClick(event)">
     <div class="cart-modal-content">
       <div class="cart-modal-header">
-        <h2>🛒 Your Selected Order List</h2>
+        <h2 style="font-size:16px; margin:0;">🛒 Your Selected Order List</h2>
         <button class="close-modal-btn" onclick="toggleCartModal()">&times;</button>
       </div>
       <div class="cart-modal-body" id="cartModalItems">
         <p style="color:#777; text-align:center; margin-top:30px;">No items selected yet.</p>
       </div>
       <div class="cart-modal-footer" id="cartModalFooter" style="display:none;">
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; margin-bottom:10px;">
-          <span>Total Estimated Price:</span>
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:15px; margin-bottom:8px;">
+          <span>Total:</span>
           <span id="cartModalTotal" style="color:#2e7d32;">₹0</span>
         </div>
 
-        <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
-          <input type="text" id="custName" placeholder="Customer Name *" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
-          <input type="text" id="custPhone" placeholder="Mobile Number *" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
-          <textarea id="custAddress" placeholder="Delivery Address / Location *" rows="2" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; resize: none;" required></textarea>
+        <div style="margin-bottom: 10px; display: flex; flex-direction: column; gap: 6px;">
+          <input type="text" id="custName" placeholder="Customer Name *" style="padding: 7px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
+          <input type="text" id="custPhone" placeholder="Mobile Number *" style="padding: 7px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
+          <textarea id="custAddress" placeholder="Delivery Address / Location *" rows="2" style="padding: 7px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; resize: none;" required></textarea>
         </div>
 
         <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">Send Order via WhatsApp 💬</button>
