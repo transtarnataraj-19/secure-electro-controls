@@ -81,10 +81,17 @@
         <p style="color:#777; text-align:center; margin-top:30px;">No items selected yet.</p>
       </div>
       <div class="cart-modal-footer" id="cartModalFooter" style="display:none;">
-        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; margin-bottom:12px;">
+        <div style="display:flex; justify-content:space-between; font-weight:bold; font-size:16px; margin-bottom:10px;">
           <span>Total Estimated Price:</span>
           <span id="cartModalTotal" style="color:#2e7d32;">₹0</span>
         </div>
+
+        <div style="margin-bottom: 12px; display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" id="custName" placeholder="Customer Name *" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
+          <input type="text" id="custPhone" placeholder="Mobile Number *" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px;" required>
+          <textarea id="custAddress" placeholder="Delivery Address / Location *" rows="2" style="padding: 8px; font-size: 13px; border: 1px solid #ccc; border-radius: 4px; resize: none;" required></textarea>
+        </div>
+
         <button class="btn-whatsapp" onclick="sendWhatsAppOrder()">Send Order via WhatsApp 💬</button>
       </div>
     </div>
@@ -106,6 +113,7 @@
         <option value="Concealed Boxes">Concealed Boxes</option>
         <option value="MCB & RCCB">MCB & RCCB</option>
         <option value="DB Boxes">DB Boxes</option>
+        <option value="CCTV & Home Automation">CCTV & Home Automation</option>
         <option value="Industrial Automation">Industrial Automation</option>
       </select>
     </div>
@@ -268,7 +276,23 @@
     function sendWhatsAppOrder() {
       const cartKeys = Object.keys(cart);
       if (cartKeys.length === 0) return;
-      let message = "Hello Secure Electro Controls, I want to order:\n\n";
+
+      const name = document.getElementById('custName').value.trim();
+      const phoneNo = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+
+      if (!name || !phoneNo || !address) {
+        alert("Please fill in your Name, Mobile Number, and Address!");
+        return;
+      }
+
+      let message = `🛒 *New Order - Secure Electro Controls*\n\n`;
+      message += `👤 *Customer Name:* ${name}\n`;
+      message += `📞 *Contact Number:* ${phoneNo}\n`;
+      message += `📍 *Delivery Address:* ${address}\n\n`;
+      message += `-----------------------------------\n`;
+      message += `*Ordered Items:*\n`;
+
       let grandTotal = 0;
       let count = 1;
 
@@ -280,10 +304,12 @@
         count++;
       });
 
-      message += `\nTotal Estimated Price: ₹${grandTotal}\n\nPlease confirm availability & delivery details.`;
+      message += `-----------------------------------\n`;
+      message += `💰 *Total Estimated Price: ₹${grandTotal}*\n\n`;
+      message += `Please confirm availability & delivery details.`;
 
-      const phone = "917892369689"; 
-      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+      const shopPhone = "917892369689"; 
+      const url = `https://wa.me/${shopPhone}?text=${encodeURIComponent(message)}`;
       window.open(url, '_blank');
     }
   </script>
