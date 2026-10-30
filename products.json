@@ -149,6 +149,6 @@
                      { "id": 149, "name": "RJ11 CONNETORS ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/cctv-rj11-connectors.png" },
                             { "id": 150, "name": "CCTV JUNCTION BOX ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/CCTV-JUNCTION-BOX.jpg" },
                                    { "id": 151, "name": "HOME SMART SWITCHES ", "price": 9000.0, "category": "CCTV & HOME AUTOMATION ", "img": "images/Home-automation.jpg" },
-                                          { "id": 152, "name": "Water Pump 1HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "vguard-pump-1hp.webp" },
-                                                 { "id": 153, "name": "Water Pump 1.5HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "https://github.com/transtarnataraj-19/secure-electro-controls/blob/main/images/vguard-pump-1.5hp.webp" }
+                                          { "id": 152, "name": "Water Pump 1HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "images/vguard-pump-1hp.webp" },
+                                                 { "id": 153, "name": "Water Pump 1.5HP 230v ", "price": 9000.0, "category": "Industrial Automation", "img": "images/vguard-pump-1.5hp.webp" }
 ]
